@@ -331,29 +331,28 @@ is_valid_cva <- function(cva_column, cva_value, cva_type) {
 #' @param reported_admin1 A character vector of reported admin1 values.
 #' @param valid_admin_table A data frame containing valid admin0 and admin1 values.
 #'
-#' @return A logical vector. Returns TRUE if both admin0 and admin1 values are valid, FALSE otherwise.
-#'
-#' @examples
-#' reported_admin0 <- c("RegionA", "RegionB", "RegionC")
-#' reported_admin1 <- c("SubregionA1", "SubregionB1", "SubregionC1")
-#' valid_admin_table <- data.frame(admin0 = c("RegionA", "RegionB"), admin1 = c("SubregionA1", "SubregionB1"))
-#' check_admin_validity_dplyr(reported_admin0, reported_admin1, valid_admin_table)
+#' @return A logical vector. Returns 0 if both admin0 and admin1 values are valid, 1 otherwise.
 
 check_admin_validity <- function(reported_admin0, reported_admin1, valid_admin_table) {
-  
-  # Ensure inputs are vectors of the same length
-  if (length(reported_admin0) != length(reported_admin1)) {
-    stop("reported_admin0 and reported_admin1 must be vectors of the same length.")
-  }
-  
-  # Create a data frame from reported admin0 and admin1
-  reported_admin_df <- data.frame(admin0 = reported_admin0, admin1 = reported_admin1)
-  
-  # Check validity using dplyr
-  validity_check <- reported_admin_df |>
-    left_join(valid_admin_table, by = c("admin0", "admin1")) |>
-    mutate(valid = !is.na(admin0.y) & !is.na(admin1.y)) |>
-    pull(valid)
+  # Combine input into a dataframe
+  input_df <- tibble(
+    Country_Country = reported_admin0,
+    Country_Admin1 = reported_admin1
+  )
+  print(input_df)
+  # Join with valid admin table
+  joined_df <- input_df %>%
+    dplyr::left_join(valid_admin_table, by = c(
+      "Country_Country" = "Country", 
+      "Country_Admin1" = "Admin1"
+    ))
+  print(joined_df)
+  # Return logical vector if match found
+  validity_check <- ifelse(
+    is.na(joined_df$countryISO) | is.na(joined_df$Admin1ISOCode),
+    1,  # No match found
+    0   # Match found
+  )
   
   return(validity_check)
 }
