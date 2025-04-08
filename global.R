@@ -3,6 +3,8 @@ library(activityinfo)
 library(bslib)
 library(gridlayout)
 library(DT)
+library(purrr)
+
 
 source("functions.R")
 

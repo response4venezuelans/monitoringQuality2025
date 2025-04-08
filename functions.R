@@ -139,27 +139,33 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
 #' 
 #' @examples
 #' is_valid_output("Direct Assistance", NA) # Returns 1
-#' is_valid_output("Indirect Assistance", 5) # Returns 0
+#' is_valid_output("Other", 5) # Returns 0
 #'
 is_valid_output <- function(indicator_type, output_data_column) {
-  
   # Ensure the input is character
   if (!is.character(indicator_type)) {
     stop("indicator_type must be a character string.")
   }
   
   # Validate the condition
-  if (indicator_type == "Direct Assistance" && is.na(output_data_column)) {
-    return(1L)
-  } else {
-    return(0L)
-  }
+  result <- ifelse(
+    indicator_type == "Direct Assistance" & is.na(output_data_column),
+    0L,
+    ifelse(
+      indicator_type != "Direct Assistance" & !is.na(output_data_column) & output_data_column == 0,
+      1L,
+      0L
+    )
+  )
+  
+  return(result)
 }
+
 
 #' Validate the total beneficiaries for a given indicator type
 #'
-#' This function checks whether `total_monthly_beneficiaries_data_column` is `NA` or `0` 
-#' for certain `indicator_type` values. If it meets the error conditions, 
+#' This function checks whether `total_monthly_beneficiaries_data_column` is `NA` or `0`
+#' for certain `indicator_type` values. If it meets the error conditions,
 #' it returns `1`, otherwise it returns `0`.
 #'
 #' @param indicator_type A character vector specifying the indicator types.
@@ -185,7 +191,6 @@ is_valid_total_beneficiaries_of_month <- function(indicator_type, total_monthly_
   error_condition <- (!indicator_type %in% optional_types) & 
     (is.na(total_monthly_beneficiaries_data_column) | 
        total_monthly_beneficiaries_data_column == 0)
-  
   # Explicitly return numeric values (1 for error, 0 for valid cases)
   return(ifelse(error_condition, 1L, 0L))
 }
@@ -232,58 +237,24 @@ is_valid_new_beneficiaries_of_month <- function(indicator_type, new_beneficiarie
   return(ifelse(error_condition, 1L, 0L))
 }
 
-#' Validate population type disaggregation
+#' Check population disaggregation validity
 #'
-#' This function checks if the sum of `population_columns` matches `new_beneficiaries_of_month`
-#' for `"Direct Assistance"`, while ensuring `new_beneficiaries_of_month` is `NA` for other indicator types.
-#' The function is vectorized to work efficiently inside `dplyr::mutate()`.
+#' This function checks if the sum of specified population columns matches
+#' the new beneficiaries for rows where the indicator type is "Direct Assistance".
+#' It is designed to be used inside a dplyr::mutate() pipeline.
 #'
-#' **Validation Rules:**
-#' - If `indicator_type == "Direct Assistance"`:
-#'   - Return `0` (valid) if `sum(population_columns, na.rm = TRUE) == new_beneficiaries_of_month`
-#'   - Otherwise, return `1` (error)
-#' - If `indicator_type != "Direct Assistance"`:
-#'   - Return `0` (valid) if `new_beneficiaries_of_month` is `NA`
-#'   - Otherwise, return `1` (error)
+#' @param data A data frame
+#' @param population_columns A character vector of population column names
+#' @param indicator_type_col Name of the column containing indicator type
+#' @param new_beneficiaries_col Name of the column with new beneficiaries count
 #'
-#' @param indicator_type A character vector indicating the type of indicator.
-#' @param population_columns A list-column of numeric vectors representing disaggregated population counts.
-#' @param new_beneficiaries_of_month A numeric vector representing total new beneficiaries per row.
-#'
-#' @return An integer vector (`1` for error, `0` for valid cases).
-#'
-#' @examples
-#' library(dplyr)
-#' library(purrr)
-#'
-#' df <- tibble(
-#'   indicator_type = c("Direct Assistance", "Direct Assistance", "Other", "Capacity Building"),
-#'   population_columns = list(c(3, 2, 5), c(3, 2, 4), c(1, 1, 2), c(2, 3)),
-#'   new_beneficiaries_of_month = c(10, 9, NA, 5)
-#' )
-#'
-#' df <- df %>%
-#'   mutate(validation_result = is_valid_population_type_disaggregation_dplyr(
-#'     indicator_type, population_columns, new_beneficiaries_of_month
-#'   ))
-#'
-#' print(df)
+#' @return A data frame with a new column `is_disaggregation_invalid` (1 = invalid, 0 = valid)
 is_valid_population_type_disaggregation <- function(indicator_type, population_columns, new_beneficiaries_of_month) {
-  
-  # Ensure inputs are vectors of the same length
-  if (length(indicator_type) != length(new_beneficiaries_of_month)) {
-    stop("indicator_type and new_beneficiaries_of_month must be vectors of the same length.")
-  }
-  
-  # Case 1: Direct Assistance - Sum of population_columns must match new_beneficiaries_of_month
-  direct_assistance_check <- indicator_type == "Direct Assistance" &
-    map_dbl(population_columns, ~ sum(.x, na.rm = TRUE)) != new_beneficiaries_of_month
-  
-  # Case 2: Other indicator types - new_beneficiaries_of_month must be NA
-  other_check <- indicator_type != "Direct Assistance" & !is.na(new_beneficiaries_of_month)
-  
-  # Return 1 for errors, 0 for valid cases
-  return(ifelse(direct_assistance_check | other_check, 1L, 0L))
+  case_when(
+    indicator_type == "Direct Assistance" &
+      sum(population_columns, na.rm = TRUE) != new_beneficiaries_of_month ~ 1L,
+    TRUE ~ 0L
+  )
 }
 
 #' Validate population type AGD for Direct Assistance and Capacity Building
@@ -308,24 +279,11 @@ is_valid_population_type_disaggregation <- function(indicator_type, population_c
 #'
 #' @return An integer vector (`1` for error, `0` for valid cases, `NA` for other indicator types).
 is_valid_age_gender_disaggregation <- function(indicator_type, population_columns, new_beneficiaries_of_month) {
-  
-  # Ensure inputs are vectors of the same length
-  if (length(indicator_type) != length(new_beneficiaries_of_month)) {
-    stop("indicator_type and new_beneficiaries_of_month must be vectors of the same length.")
-  }
-  
-  # Direct Assistance: population sum must match new beneficiaries
-  direct_assistance_check <- indicator_type == "Direct Assistance" &
-    map_dbl(population_columns, ~ sum(.x, na.rm = TRUE)) != new_beneficiaries_of_month
-  
-  # Capacity Building: If data exists, it must match; if NA, it's valid
-  capacity_building_check <- indicator_type == "Capacity Building" &
-    (!is.na(new_beneficiaries_of_month) & !map_lgl(population_columns, is.null)) &
-    (map_dbl(population_columns, ~ sum(.x, na.rm = TRUE)) != new_beneficiaries_of_month)
-  
-  # Return 1 for errors, 0 for valid cases, NA for other indicators
-  return(ifelse(indicator_type %in% c("Direct Assistance", "Capacity Building"),
-                ifelse(direct_assistance_check | capacity_building_check, 1L, 0L), NA_integer_))
+  case_when(
+    (indicator_type == "Direct Assistance" | indicator_type == "Capacity Building") &
+      sum(population_columns, na.rm = TRUE) != new_beneficiaries_of_month ~ 1L,
+    TRUE ~ 0L
+  )
 }
 
 #' Check Validity of CVA Data
@@ -361,7 +319,7 @@ is_valid_cva <- function(cva_column, cva_value, cva_type) {
   cva_check <- cva_column == "Yes" & (cva_value <= 0 | !cva_type %in% valid_cva_types)
   
   # Return 1 for errors, 0 for valid cases, NA for other cases
-  return(ifelse(cva_column == "Yes", ifelse(cva_check, 1L, 0L), NA_integer_))
+  return(ifelse(cva_column == "Yes", ifelse(cva_check, 1L, 0L), 0L))
 }
 
 

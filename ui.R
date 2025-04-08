@@ -67,7 +67,7 @@ ui <- page_navbar(
         use_waiter(),
         actionButton("getDataFromActivityInfoDB", "Pull data from ActivityInfo"),
         waiter::waiter_preloader(html = spin_folding_cube()),
-        actionButton("checkDataFromActivityInfoDB", "QA analisys", disabled = TRUE),
+        actionButton("checkDataFromActivityInfoDB", "QA analysis", disabled = TRUE),
         waiter::waiter_preloader(html = spin_folding_cube())
       ),
       tags$div(

@@ -57,15 +57,23 @@ server <- function(input, output, session) {
   observeEvent(input$analizeDataFromExcelFile, {
     # Perform QA analysis on the uploaded data
     data <- uploaded_data()
+    print('boton_excel')
     # TODO Add your QA analysis code here 
   })
   
   # Add any additional processing or analysis here
   observeEvent(input$checkDataFromActivityInfoDB, {
     # Perform QA analysis on the uploaded data
-    #data <- uploaded_data()
-    print('boton')
-    # TODO Add your QA analysis code here 
+    print('boton_AI')
+    # Load the script
+    source("R/QAFromAIDB.R")  # Assume it defines a function, e.g., qa_check(data)
+    # Run the script function on the data
+    data_to_check <- fetchedData()
+    # Suppose the script defines a function called qa_check
+    #browser()
+    checked_data <- qa_check(data_to_check)
+    # Update the reactive value with the checked data (optional)
+    fetchedData(checked_data)
   })
   
   # Render DataTable safely
