@@ -114,10 +114,18 @@ ui <- page_navbar(
         them in a new Excel file to make corrections. After fixing the issues,
         upload the corrected file back into the Activity Info Database."
         ),
+        tags$a(
+          href = "template_5w.xlsx",
+          target = "_blank",
+          download = NA,
+          class = "btn btn-primary",  # Make it look like a button if you want
+          "Download Excel Template"
+        )
+        
         
       ),
       tags$div(
-        tags$h3("Database QA from excel"),
+        tags$h3("Read data from excel file"),
         tags$p(
           "Please upload an excel file in agreement with the following template,
         ressults of the data quality can be reviewed in the results tab"
