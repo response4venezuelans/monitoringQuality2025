@@ -136,7 +136,8 @@ ui <- page_navbar(
             actionButton(
               "analizeDataFromExcelFile",
               "Execute analysis from excel file"
-            )
+            ),
+            downloadButton("downloadDataExcel", "Error Report", disabled = TRUE)
           )
         ),
         column(

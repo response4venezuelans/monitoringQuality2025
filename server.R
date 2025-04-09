@@ -79,6 +79,16 @@ server <- function(input, output, session) {
       writexl::write_xlsx(fetchedData(), path = file)
     }
   )
+  
+  output$downloadDataExcel <- downloadHandler(
+    filename = function() {
+      "error_report.xlsx"
+    },
+    content = function(file) {
+      # Write your dataset to the file
+      writexl::write_xlsx(fetchedDataExcel(), path = file)
+    }
+  )
 
   ### Metric Boxes
   
@@ -124,7 +134,7 @@ server <- function(input, output, session) {
   
   output$total_percent_box <- renderUI({
     value_box( 
-      title = "Total percent", 
+      title = "Total percent error", 
       showcase = percent_icon,
       value = metrics_db$percent_error, 
       theme = "danger",
@@ -133,7 +143,7 @@ server <- function(input, output, session) {
   })
   output$total_percent_box_xlsx <- renderUI({
     value_box( 
-      title = "Total percent", 
+      title = "Total percent error", 
       showcase = percent_icon,
       value = metrics_excel$percent_error, 
       theme = "danger",
