@@ -123,7 +123,17 @@ server <- function(input, output, session) {
     # Perform QA analysis on the uploaded data
     data <- uploaded_data()
     print('boton_excel')
-    print(check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1))
+    isTemplateValid<-check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1)
+    if(!isTemplateValid){
+      showModal(
+        modalDialog(
+          title = "Error: Data structure check failed!!",
+          easy_close = TRUE,
+          "The structure of the uploaded data does not match the expected template.",
+        )
+      )
+    }
+    #Before starting Q&A columns renaming and data completion must be conducted
     # TODO Add your QA analysis code here 
   })
   

@@ -118,11 +118,8 @@ ui <- page_navbar(
           href = "template_5w_2025.xlsx",
           target = "_blank",
           download = NA,
-          #class = "btn btn-primary",  # Make it look like a button if you want
           "Download Excel Template"
         )
-        
-        
       ),
       tags$div(
         tags$h3("Read data from excel file"),
