@@ -57,3 +57,18 @@ df_partnersDF <- queryTable("cukzlnfm66k09v73",
                           "Link ES" = "cakk6mm66k0dum13")
 partnerList<- unique(df_partnersDF$Name)
 partnerList <- c(partnerList, "All")
+
+indicatorDF <- queryTable("cwk3g8tm07falxuu7j",
+                 "CODE" = "cdhugiblctco28h3",
+                 "Sector" = "cagw22hlctcp2vu5",
+                 "Sector Objective" = "cyyqv3alctcperj6",
+                 "Indicator" = "c1oo0eclctcqtjp8",
+                 "Rationale" = "cpaq2z8m07feolz3",
+                 "Indicator Type" = "cuskmf7lctcszoga",
+                 "Definitions" = "cmfe24fm07ff9y24",
+                 "Sector SP" = "cviy6p0lctcud9xc",
+                 "Objetivo" = "c4ut4hjlctcunimd",
+                 "Indicador" = "c9ck1g2lctcuxg4e",
+                 "Descripcion" = "chilz3cm07fgc9g5",
+                 "Tipo de indicador" = "cw1sv7hlctd1pk5g",
+                 "Definiciones" = "cyznpw1m07fgv8l6")

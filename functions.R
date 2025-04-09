@@ -323,9 +323,9 @@ is_valid_cva <- function(cva_column, cva_value, cva_type) {
 }
 
 
-#' Check Validity of Admin0 and Admin1 using dplyr
+#' Check Validity of Admin0 and Admin1
 #'
-#' This function checks if the reported admin0 and admin1 values belong to the provided table using dplyr.
+#' This function checks if the reported admin0 and admin1 values belong to the provided table.
 #'
 #' @param reported_admin0 A character vector of reported admin0 values.
 #' @param reported_admin1 A character vector of reported admin1 values.
@@ -339,14 +339,12 @@ check_admin_validity <- function(reported_admin0, reported_admin1, valid_admin_t
     Country_Country = reported_admin0,
     Country_Admin1 = reported_admin1
   )
-  print(input_df)
   # Join with valid admin table
-  joined_df <- input_df %>%
+  joined_df <- input_df |>
     dplyr::left_join(valid_admin_table, by = c(
       "Country_Country" = "Country", 
       "Country_Admin1" = "Admin1"
     ))
-  print(joined_df)
   # Return logical vector if match found
   validity_check <- ifelse(
     is.na(joined_df$countryISO) | is.na(joined_df$Admin1ISOCode),
@@ -357,8 +355,55 @@ check_admin_validity <- function(reported_admin0, reported_admin1, valid_admin_t
   return(validity_check)
 }
 
+#' Check Validity of indicator and sector correspondance
+#'
+#' This function checks if the reported Sector and indicator values belong to the provided table.
+#'
+#' @param reported_admin0 A character vector of reported admin0 values.
+#' @param reported_admin1 A character vector of reported admin1 values.
+#' @param valid_admin_table A data frame containing valid admin0 and admin1 values.
+#'
+#' @return A logical vector. Returns 0 if both admin0 and admin1 values are valid, 1 otherwise.
 
+check_indicator_validity <- function(reported_sector, reported_indicator, valid_indicator_table) {
+  # Combine input into a dataframe
+  input_df <- tibble(
+    Sector = reported_sector,
+    Indicator = reported_indicator
+  )
+  # Join with valid admin table
+  joined_df <- input_df |>
+    dplyr::left_join(valid_indicator_table, by = c(
+      "Sector" = "Sector", 
+      "Indicator" = "Indicator"
+    ))
+  # Return logical vector if match found
+  validity_check <- ifelse(
+    is.na(joined_df$CODE),
+    1,  # No match found
+    0   # Match found
+  )
+  
+  return(validity_check)
+}
 
+get_total_activities <- function(dataframe){
+  return(nrow(dataframe))
+}
+
+get_total_activities_to_review <- function(dataframe, column_name) {
+  dataframe %>%
+    summarize(total = sum(.data[[column_name]], na.rm = TRUE)) %>%
+    pull(total)
+}
+
+get_percentage_activities <- function(total_errors, total_activities) {
+  if (total_activities == 0) {
+    return(0)
+  }
+  
+  round((total_errors / total_activities) * 100,2)
+}
 
 
 

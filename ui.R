@@ -5,11 +5,13 @@ library(gridlayout)
 library(DT)
 library(waiter)
 ui <- page_navbar(
+  
   title = "Activity Info Quality RMRP 2025/2026",
   selected = "About",
   collapsible = TRUE,
   theme = R4Vtheme,
   header = tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
     tags$link(rel = "shortcut icon", href = "img/logo.ico"),
     tags$link(rel = "stylesheet", type = "text/css", href = "img/r4vLogo.png"),
     tags$link(rel = "stylesheet", type = "text/css", href = "https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro")
@@ -68,12 +70,33 @@ ui <- page_navbar(
         actionButton("getDataFromActivityInfoDB", "Pull data from ActivityInfo"),
         waiter::waiter_preloader(html = spin_folding_cube()),
         actionButton("checkDataFromActivityInfoDB", "QA analysis", disabled = TRUE),
-        waiter::waiter_preloader(html = spin_folding_cube())
+        waiter::waiter_preloader(html = spin_folding_cube()),
+        downloadButton("downloadDataAI", "Error Report", disabled = TRUE)
       ),
       tags$div(
-        tags$h3("Data read from Regional ActivityInfo Database"),
-        tags$p("Select a country from the sidebar to filter the database."),
-        tags$p("After data is displayed please use the QA button to get the results")
+        tags$h3("Read data from Regional ActivityInfo Database"),
+      ),
+      fluidRow(
+        column(
+          width = 6,
+          tags$div(
+            tags$p("Select a country from the sidebar to filter the database."),
+            tags$p("After data is displayed please use the QA button to get the results"),
+            tags$p("Use download button to get an excel report of your data")
+          )
+        ),
+        column(
+          width = 2,
+          uiOutput("total_activities_box")
+        ),
+        column(
+          width = 2,
+          uiOutput("total_error_box")
+        ),
+        column(
+          width = 2,
+          uiOutput("total_percent_box")
+        ),
       ),
       DTOutput("dataTable")
     )
@@ -96,7 +119,7 @@ ui <- page_navbar(
       tags$div(
         tags$h3("Database QA from excel"),
         tags$p(
-        "Please upload an excel file in agreement with the following template,
+          "Please upload an excel file in agreement with the following template,
         ressults of the data quality can be reviewed in the results tab"
         ),
         fileInput(
@@ -109,29 +132,6 @@ ui <- page_navbar(
           "analizeDataFromExcelFile",
           "Excecute QA analysis from excel file"
         ),
-        DTOutput("previewXlsTable")
-      )
-    )
-  ),
-  nav_panel(
-    title = "Results",
-    layout_sidebar(
-      open = TRUE,
-      sidebar = tagList(
-        tags$h4("How to interpret these results sheet"),
-        tags$p(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec felis
-          vehicula, egestas odio ac, tristique augue. Nam scelerisque velit a orci
-          venenatis, non dapibus sapien aliquet. Suspendisse potenti, et malesuada
-          magna eu, vulputate lorem. Nullam dictum risus ut nisi fermentum, nec
-          interdum felis commodo. Aenean vel tortor in ligula accumsan dapibus et
-          vel est. Proin ut lectus euismod, dapibus dui ut, dictum mi"
-        ),
-        
-      ),
-      tags$div(
-        tags$h3("QA Results"),
-        tags$p("--Select a country from the sidebar to filter the database."),
         DTOutput("previewXlsTable")
       )
     )

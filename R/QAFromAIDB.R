@@ -1,7 +1,6 @@
 qa_check <- function(data) {
   # Perform quality assurance checks on 'data'
   # e.g., fix column names, check missing values, etc.
-  print(names(data))
   data <- data |>
     ## Check for Output column with valid types
     mutate(
@@ -44,7 +43,11 @@ qa_check <- function(data) {
     )|>
     mutate(
       QA_admin = check_admin_validity(Country.Country, Country.Admin1, countryListDF)
-    )
+    )|>
+    mutate(
+      QA_indicator = check_indicator_validity(Indicator.Sector, Indicator.Indicator, indicatorDF)
+    )%>%
+    mutate(QA_sum = rowSums(select(., starts_with("QA_"))))
   
   return(data)
 }

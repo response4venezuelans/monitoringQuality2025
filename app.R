@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(writexl)
 library(activityinfo)
 library(bslib)
 library(gridlayout)
