@@ -6,7 +6,7 @@ library(DT)
 library(waiter)
 ui <- page_navbar(
   
-  title = "Activity Info Quality RMRP 2025/2026",
+  title = "Quality Control of R4V Monitoring Data - ActivityInfo 5W 2025",
   selected = "About",
   collapsible = TRUE,
   theme = R4Vtheme,
@@ -27,20 +27,18 @@ ui <- page_navbar(
       tags$div(
         style = "text-align: justify;",
         tags$p(
-          "This app is designed to check existing data in ActivityInfo or to
-           quickly check offline data before bulk-uploading it.
-           After Quality Assurance (QA), users can then download a version
-           of their dataset according for the creation of the R4V Consolidated
-           Report on reached population by sector."
+          "This app is designed to check existing data in ActivityInfo or to 
+          review offline data before bulk uploading it into the Regional 5W 
+          database."
         ),
         tags$p(
           tags$i(
-            "To get started navigate to the following tabs to perform Quatity Assurance
-             or Analyze data from excel file previous to uploading it into the regional Database"
+            "To get started, navigate to the following tabs to perform 
+          the Quality Assurance (QA) revision or analyze data from an excel file."
           )
         ),
         tags$p(
-          tags$i("Any comments to this app please contact the R4V regional IM TEAM")
+          tags$i("For any comments to this app, please contact the R4V regional IM TEAM")
         )
       )
     )
@@ -124,7 +122,7 @@ ui <- page_navbar(
       tags$div(
         tags$h3("Read data from excel file"),
         tags$p(
-          "Please upload an excel file in agreement with the template"
+          "Please upload an Excel file using the template categories."
         ),
         fileInput(
           "uploadExcelFile",

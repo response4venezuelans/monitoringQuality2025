@@ -7,7 +7,12 @@ library(waiter)
 library(readxl)  # For reading Excel files
 
 server <- function(input, output, session) {
-  metrics <- reactiveValues(
+  metrics_db <- reactiveValues(
+    total_activities = 0,
+    total_errors = 0,
+    percent_error = 0
+  )
+  metrics_excel <- reactiveValues(
     total_activities = 0,
     total_errors = 0,
     percent_error = 0
@@ -55,9 +60,9 @@ server <- function(input, output, session) {
     checked_data <- qa_check(data_to_check)
     # Update the reactive value with the checked data (optional)
     fetchedData(checked_data)
-    metrics$total_activities<-get_total_activities(checked_data)
-    metrics$total_errors<-get_total_activities_to_review(checked_data, "QA_sum")
-    metrics$percent_error <- get_percentage_activities(metrics$total_errors,metrics$total_activities)
+    metrics_db$total_activities<-get_total_activities(checked_data)
+    metrics_db$total_errors<-get_total_activities_to_review(checked_data, "QA_sum")
+    metrics_db$percent_error <- get_percentage_activities(metrics_db$total_errors,metrics_db$total_activities)
   })
   
   # Render DataTable safely
@@ -71,7 +76,6 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       # Write your dataset to the file
-      # Example with the writexl package
       writexl::write_xlsx(fetchedData(), path = file)
     }
   )
@@ -145,6 +149,9 @@ server <- function(input, output, session) {
     checked_data <- qa_check(data)
     # Update the reactive value with the processed data
     fetchedDataExcel(checked_data)
-    #fetchedDataExcel(data)
+    # Update metrics based on the Excel file analysis
+    metrics_excel$total_activities <- get_total_activities(checked_data)
+    metrics_excel$total_errors <- get_total_activities_to_review(checked_data, "QA_sum")
+    metrics_excel$percent_error <- get_percentage_activities(metrics$total_errors, metrics$total_activities)
   })
 }
