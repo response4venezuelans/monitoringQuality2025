@@ -42,27 +42,6 @@ server <- function(input, output, session) {
     waiter$hide()
   })
   
-  # Reactive expression to read the uploaded Excel file
-  uploaded_data <- reactive({
-    req(input$uploadExcelFile)  # Ensure a file is uploaded
-    file <- input$uploadExcelFile$datapath
-    read_excel(file)  # Read the Excel file
-  })
-  
-  # Render the preview of the uploaded Excel file
-  output$previewXlsTable <- renderDT({
-    req(uploaded_data())  # Ensure data is available
-    datatable(uploaded_data(), options = list(pageLength = 5))
-  })
-  
-  # Add any additional processing or analysis here
-  observeEvent(input$analizeDataFromExcelFile, {
-    # Perform QA analysis on the uploaded data
-    data <- uploaded_data()
-    print('boton_excel')
-    # TODO Add your QA analysis code here 
-  })
-  
   # Add any additional processing or analysis here
   observeEvent(input$checkDataFromActivityInfoDB, {
     # Perform QA analysis on the uploaded data
@@ -98,7 +77,8 @@ server <- function(input, output, session) {
   
   output$total_activities_box <- renderUI({
     value_box( 
-      title = "Activities", 
+      title = "Activities",
+      showcase =  activities_icon,
       value = metrics$total_activities, 
       theme = "info",
       class = "my-valuebox"
@@ -107,7 +87,8 @@ server <- function(input, output, session) {
   
   output$total_error_box <- renderUI({
     value_box( 
-      title = "Total Error", 
+      title = "Total Error",
+      showcase = error_icon,
       value = metrics$total_errors, 
       theme = "warning",
       class = "my-valuebox"
@@ -117,10 +98,32 @@ server <- function(input, output, session) {
   output$total_percent_box <- renderUI({
     value_box( 
       title = "Total percent", 
+      showcase = percent_icon,
       value = metrics$percent_error, 
       theme = "danger",
       class = "my-valuebox"
     )
+  })
+  
+  
+  # Reactive expression to read the uploaded Excel file
+  uploaded_data <- reactive({
+    req(input$uploadExcelFile)  # Ensure a file is uploaded
+    file <- input$uploadExcelFile$datapath
+    read_excel(file)  # Read the Excel file
+  })
+  
+  # Render the preview of the uploaded Excel file
+  output$previewXlsTable <- renderDT({
+    req(uploaded_data())  # Ensure data is available
+    datatable(uploaded_data(), options = list(pageLength = 5))
+  })
+  
+  observeEvent(input$analizeDataFromExcelFile, {
+    # Perform QA analysis on the uploaded data
+    data <- uploaded_data()
+    print('boton_excel')
+    # TODO Add your QA analysis code here 
   })
   
 }

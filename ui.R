@@ -118,7 +118,7 @@ ui <- page_navbar(
           href = "template_5w.xlsx",
           target = "_blank",
           download = NA,
-          class = "btn btn-primary",  # Make it look like a button if you want
+          #class = "btn btn-primary",  # Make it look like a button if you want
           "Download Excel Template"
         )
         
@@ -127,12 +127,11 @@ ui <- page_navbar(
       tags$div(
         tags$h3("Read data from excel file"),
         tags$p(
-          "Please upload an excel file in agreement with the following template,
-        ressults of the data quality can be reviewed in the results tab"
+          "Please upload an excel file in agreement with the template"
         ),
         fileInput(
           "uploadExcelFile",
-          "Upload a compliant file",
+          "Upload file...",
           multiple = FALSE,
           accept = ".xlsx",
         ),
