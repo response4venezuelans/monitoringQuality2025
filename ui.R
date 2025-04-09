@@ -115,7 +115,7 @@ ui <- page_navbar(
         upload the corrected file back into the Activity Info Database."
         ),
         tags$a(
-          href = "template_5w.xlsx",
+          href = "template_5w_2025.xlsx",
           target = "_blank",
           download = NA,
           #class = "btn btn-primary",  # Make it look like a button if you want
@@ -137,7 +137,7 @@ ui <- page_navbar(
         ),
         actionButton(
           "analizeDataFromExcelFile",
-          "Excecute QA analysis from excel file"
+          "Execute analysis from excel file"
         ),
         DTOutput("previewXlsTable")
       )

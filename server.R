@@ -1,10 +1,10 @@
-library(shiny)
-library(activityinfo)
-library(bslib)
-library(gridlayout)
-library(DT)
-library(waiter)
-library(readxl)  # For reading Excel files
+# library(shiny)
+# library(activityinfo)
+# library(bslib)
+# library(gridlayout)
+# library(DT)
+# library(waiter)
+# library(readxl)  # For reading Excel files
 
 server <- function(input, output, session) {
   metrics <- reactiveValues(
@@ -123,6 +123,7 @@ server <- function(input, output, session) {
     # Perform QA analysis on the uploaded data
     data <- uploaded_data()
     print('boton_excel')
+    print(check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1))
     # TODO Add your QA analysis code here 
   })
   

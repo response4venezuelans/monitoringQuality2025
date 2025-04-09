@@ -36,10 +36,10 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Men above 18" = "ctd27ackx6l7g814v",
                                          "Other under 18" = "ckjcuiokx6l9a504w",
                                          "Other above 18" = "cq4hs3skx6lggpj4x",
+                                         "Platform" = "cuhb8obl0wjzz9r3",
                                          "Indicator Indicator Type" = "cuskmf7lctcszoga",
                                          "Country countryISO" = "c1u8kphm4vqtemz2",
                                          "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
-                                         "Platform" = "cuhb8obl0wjzz9r3",
                                          filter = sprintf("LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4) == '%s'", value))
   } else if (typeOfRequest == "partner" & filterRequest != "All") {
     value <- filterRequest
@@ -76,10 +76,10 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Men above 18" = "ctd27ackx6l7g814v",
                                          "Other under 18" = "ckjcuiokx6l9a504w",
                                          "Other above 18" = "cq4hs3skx6lggpj4x",
+                                         "Platform" = "cuhb8obl0wjzz9r3",
                                          "Indicator Indicator Type" = "cuskmf7lctcszoga",
                                          "Country countryISO" = "c1u8kphm4vqtemz2",
                                          "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
-                                         "Platform" = "cuhb8obl0wjzz9r3",
                                          filter = sprintf("LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8) == '%s'", value))
   } else if (typeOfRequest == "partner" & filterRequest == "All" || 
              typeOfRequest == "country" & filterRequest == "All") {
@@ -116,10 +116,10 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Men above 18" = "ctd27ackx6l7g814v",
                                          "Other under 18" = "ckjcuiokx6l9a504w",
                                          "Other above 18" = "cq4hs3skx6lggpj4x",
+                                         "Platform" = "cuhb8obl0wjzz9r3",
                                          "Indicator Indicator Type" = "cuskmf7lctcszoga",
                                          "Country countryISO" = "c1u8kphm4vqtemz2",
-                                         "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
-                                         "Platform" = "cuhb8obl0wjzz9r3")
+                                         "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6")
     
   }
   return(Monitoring5WqueryTable)
@@ -387,6 +387,7 @@ check_indicator_validity <- function(reported_sector, reported_indicator, valid_
   return(validity_check)
 }
 
+## Functions for metrics in boxes
 get_total_activities <- function(dataframe){
   return(nrow(dataframe))
 }
@@ -404,6 +405,39 @@ get_percentage_activities <- function(total_errors, total_activities) {
   
   round((total_errors / total_activities) * 100,2)
 }
+
+## functions for processing external excel file
+
+#' Check if imported dataframe is compliant with the template
+#'
+#' This function checks if the uploaded excel file is compliant with template
+#'
+#' @param dataframe A compliant dataframe with 5W info.
+#'
+#' @return TRUE or FALSE de pending in compliancy test
+
+
+check_dataframe_structure <- function(dataframe, template_file_path, sheet = 1) {
+  # Read the template Excel file
+  template <- read_excel(template_file_path, sheet = sheet)
+  # Get column names of the template
+  template_colnames <- colnames(template)
+  # Get column names of the dataframe
+  dataframe_colnames <- colnames(dataframe)
+  # Check if the number of columns match
+  if (length(template_colnames) != length(dataframe_colnames)) {
+    return(FALSE)
+  }
+  # Check if column names match
+  colnames_match <- all(template_colnames == dataframe_colnames)
+  # Return the result
+  if (colnames_match) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
 
 
 
