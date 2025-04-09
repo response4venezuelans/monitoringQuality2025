@@ -119,23 +119,40 @@ ui <- page_navbar(
           "Download Excel Template"
         )
       ),
-      tags$div(
-        tags$h3("Read data from excel file"),
-        tags$p(
-          "Please upload an Excel file using the template categories."
+      fluidRow(
+        column(
+          width = 6,
+          tags$div(
+            tags$h3("Read data from excel file"),
+            tags$p(
+              "Please upload an Excel file using the template categories."
+            ),
+            fileInput(
+              "uploadExcelFile",
+              "Upload file...",
+              multiple = FALSE,
+              accept = ".xlsx",
+            ),
+            actionButton(
+              "analizeDataFromExcelFile",
+              "Execute analysis from excel file"
+            )
+          )
         ),
-        fileInput(
-          "uploadExcelFile",
-          "Upload file...",
-          multiple = FALSE,
-          accept = ".xlsx",
+        column(
+          width = 2,
+          uiOutput("total_activities_box_xlsx")
         ),
-        actionButton(
-          "analizeDataFromExcelFile",
-          "Execute analysis from excel file"
+        column(
+          width = 2,
+          uiOutput("total_error_box_xlsx")
         ),
-        DTOutput("previewXlsTable")
-      )
+        column(
+          width = 2,
+          uiOutput("total_percent_box_xlsx")
+        )
+      ),
+      DTOutput("previewXlsTable")
     )
   )
 )

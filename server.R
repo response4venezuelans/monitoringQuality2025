@@ -79,12 +79,24 @@ server <- function(input, output, session) {
       writexl::write_xlsx(fetchedData(), path = file)
     }
   )
+
+  ### Metric Boxes
   
   output$total_activities_box <- renderUI({
     value_box( 
       title = "Activities",
       showcase =  activities_icon,
-      value = metrics$total_activities, 
+      value = metrics_db$total_activities, 
+      theme = "info",
+      class = "my-valuebox"
+    )
+  })
+  
+  output$total_activities_box_xlsx <- renderUI({
+    value_box( 
+      title = "Activities",
+      showcase =  activities_icon,
+      value = metrics_excel$total_activities, 
       theme = "info",
       class = "my-valuebox"
     )
@@ -94,7 +106,17 @@ server <- function(input, output, session) {
     value_box( 
       title = "Total Error",
       showcase = error_icon,
-      value = metrics$total_errors, 
+      value = metrics_db$total_errors, 
+      theme = "warning",
+      class = "my-valuebox"
+    )
+  })
+  
+  output$total_error_box_xlsx <- renderUI({
+    value_box( 
+      title = "Total Error",
+      showcase = error_icon,
+      value = metrics_excel$total_errors, 
       theme = "warning",
       class = "my-valuebox"
     )
@@ -104,12 +126,20 @@ server <- function(input, output, session) {
     value_box( 
       title = "Total percent", 
       showcase = percent_icon,
-      value = metrics$percent_error, 
+      value = metrics_db$percent_error, 
       theme = "danger",
       class = "my-valuebox"
     )
   })
-  
+  output$total_percent_box_xlsx <- renderUI({
+    value_box( 
+      title = "Total percent", 
+      showcase = percent_icon,
+      value = metrics_excel$percent_error, 
+      theme = "danger",
+      class = "my-valuebox"
+    )
+  })  
   
   # Reactive expression to read the uploaded Excel file
   uploaded_data <- reactive({
@@ -139,9 +169,6 @@ server <- function(input, output, session) {
       )
       return(NULL) # Stop here if template invalid
     }
-    
-    # Before starting Q&A columns renaming and data completion must be conducted
-    # TODO Add your QA analysis code here 
     data <- rename_columns(data)
     data <- add_platform_column(data)
     data <- addIndicatorType(data, indicatorDF)
@@ -152,6 +179,6 @@ server <- function(input, output, session) {
     # Update metrics based on the Excel file analysis
     metrics_excel$total_activities <- get_total_activities(checked_data)
     metrics_excel$total_errors <- get_total_activities_to_review(checked_data, "QA_sum")
-    metrics_excel$percent_error <- get_percentage_activities(metrics$total_errors, metrics$total_activities)
+    metrics_excel$percent_error <- get_percentage_activities(metrics_excel$total_errors, metrics_excel$total_activities)
   })
 }
