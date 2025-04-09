@@ -14,6 +14,7 @@ server <- function(input, output, session) {
   )
   # Initialize fetchedData as an empty reactive value
   fetchedData <- reactiveVal(data.frame(Message = "No data available", stringsAsFactors = FALSE))
+  fetchedDataExcel <- reactiveVal(data.frame(Message = "No data available", stringsAsFactors = FALSE))
   
   # Observe filter selection changes and update choices
   observe({
@@ -50,7 +51,7 @@ server <- function(input, output, session) {
     req(fetchedData())
     # Run the script function on the data
     data_to_check <- fetchedData()
-
+    
     checked_data <- qa_check(data_to_check)
     # Update the reactive value with the checked data (optional)
     fetchedData(checked_data)
@@ -113,28 +114,37 @@ server <- function(input, output, session) {
     read_excel(file)  # Read the Excel file
   })
   
-  # Render the preview of the uploaded Excel file
+  # Render the preview of the uploaded Excel file or the processed data
   output$previewXlsTable <- renderDT({
-    req(uploaded_data())  # Ensure data is available
-    datatable(uploaded_data(), options = list(pageLength = 5))
+    req(fetchedDataExcel())  # Ensure data is available
+    datatable(fetchedDataExcel(), options = list(pageLength = 5))
   })
   
   observeEvent(input$analizeDataFromExcelFile, {
     # Perform QA analysis on the uploaded data
     data <- uploaded_data()
     print('boton_excel')
-    isTemplateValid<-check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1)
-    if(!isTemplateValid){
+    isTemplateValid <- check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1)
+    if (!isTemplateValid) {
       showModal(
         modalDialog(
           title = "Error: Data structure check failed!!",
           easy_close = TRUE,
-          "The structure of the uploaded data does not match the expected template.",
+          "The structure of the uploaded data does not match the expected template."
         )
       )
+      return(NULL) # Stop here if template invalid
     }
-    #Before starting Q&A columns renaming and data completion must be conducted
+    
+    # Before starting Q&A columns renaming and data completion must be conducted
     # TODO Add your QA analysis code here 
+    data <- rename_columns(data)
+    data <- add_platform_column(data)
+    data <- addIndicatorType(data, indicatorDF)
+    data <- addCountryISOCodes(data, countryListDF)
+    checked_data <- qa_check(data)
+    # Update the reactive value with the processed data
+    fetchedDataExcel(checked_data)
+    #fetchedDataExcel(data)
   })
-  
 }

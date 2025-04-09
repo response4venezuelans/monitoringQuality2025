@@ -439,6 +439,68 @@ check_dataframe_structure <- function(dataframe, template_file_path, sheet = 1) 
 }
 
 
+rename_columns <- function(dataframe) {
+  # Replace spaces, "(" and ")" with "."
+  colnames(dataframe) <- colnames(dataframe) |>
+    gsub(" ", ".", x = _) |>
+    gsub("\\(", ".", x = _) |>
+    gsub("\\)", ".", x = _)
+  
+  return(dataframe)
+}
+
+add_platform_column <- function(df) {
+  df <- df %>%
+    mutate(Platform = case_when(
+      Country.Country == "Brazil" ~ "Brazil",
+      Country.Country == "Chile" ~ "Chile",
+      Country.Country == "Colombia" ~ "Colombia",
+      Country.Country == "Ecuador" ~ "Ecuador",
+      Country.Country == "Peru" ~ "Peru",
+      Country.Country %in% c("Aruba", "Curacao", "Guyana", "Dominican Republic", "Trinidad and Tobago") ~ "Caribbean",
+      Country.Country %in% c("Costa Rica", "Mexico", "Panama") ~ "Central America and Mexico",
+      Country.Country %in% c("Argentina", "Paraguay", "Uruguay", "Bolivia") ~ "Southern Cone",
+      
+      TRUE ~ NA_character_
+    ))
+  return(df)
+}
+
+addIndicatorType<-function(df, indicatordf){
+  
+  indicatordf <- indicatordf %>%
+    select(Sector, Indicator, Indicator.Type)
+  
+  df<-df%>%
+    left_join(
+      indicatordf, by = c(
+        "Indicator.Sector" = "Sector", 
+        "Indicator.Indicator" = "Indicator"
+      )
+    )%>%
+    rename(Indicator.Indicator.Type = Indicator.Type)
+           
+  return(df)
+    
+}
+
+addCountryISOCodes<-function(df, countryDF){
+  df <- df %>%
+    left_join(
+      countryDF, by = c(
+        "Country.Country" = "Country",
+        "Country.Admin1" = "Admin1"
+      )
+    )%>%
+    rename(
+      "Country.countryISO"= "countryISO",
+      "Country.Admin1ISOCode" = "Admin1ISOCode"
+    )
+  return(df)
+}
+
+
+
 
 
 
