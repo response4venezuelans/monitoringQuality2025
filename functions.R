@@ -387,6 +387,25 @@ check_indicator_validity <- function(reported_sector, reported_indicator, valid_
   return(validity_check)
 }
 
+
+## Sector Specific Validation
+
+#' Check Validity consistency of report regarding AGD with Education Sector
+#'
+#' This function checks if the AGD values in 5W for Education sector, belong to 
+#' Children.
+#'
+#' @param sector A character column of reported sector.
+#' @param indicatorType A character column of indicator type.
+#'
+#' @return Returns 0 if direct assistance in education is directed to children and 1 otherwise .
+
+is_valid_education_sector <- function (sector, indicatortType){
+  
+}
+
+
+
 ## Functions for metrics in boxes
 get_total_activities <- function(dataframe){
   return(nrow(dataframe))

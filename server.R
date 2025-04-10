@@ -116,7 +116,7 @@ server <- function(input, output, session) {
   
   output$total_error_box <- renderUI({
     value_box( 
-      title = "Total Error",
+      title = "Total Errors",
       showcase = error_icon,
       value = metrics_db$total_errors, 
       theme = "warning",
@@ -126,7 +126,7 @@ server <- function(input, output, session) {
   
   output$total_error_box_xlsx <- renderUI({
     value_box( 
-      title = "Total Error",
+      title = "Total Errors",
       showcase = error_icon,
       value = metrics_excel$total_errors, 
       theme = "warning",
@@ -136,7 +136,7 @@ server <- function(input, output, session) {
   
   output$total_percent_box <- renderUI({
     value_box( 
-      title = "Total percent error", 
+      title = "Percentage of errors", 
       showcase = percent_icon,
       value = metrics_db$percent_error, 
       theme = "danger",
@@ -145,7 +145,7 @@ server <- function(input, output, session) {
   })
   output$total_percent_box_xlsx <- renderUI({
     value_box( 
-      title = "Total percent error", 
+      title = "Percentage of errors", 
       showcase = percent_icon,
       value = metrics_excel$percent_error, 
       theme = "danger",
@@ -169,7 +169,6 @@ server <- function(input, output, session) {
   observeEvent(input$analizeDataFromExcelFile, {
     # Perform QA analysis on the uploaded data
     data <- uploaded_data()
-    print('boton_excel')
     isTemplateValid <- check_dataframe_structure(data, "www/template_5w_2025.xlsx", sheet = 1)
     if (!isTemplateValid) {
       showModal(
