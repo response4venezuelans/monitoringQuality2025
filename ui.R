@@ -4,6 +4,9 @@ library(bslib)
 library(gridlayout)
 library(DT)
 library(waiter)
+library(readxl)
+library(writexl)
+library(purrr)
 ui <- page_navbar(
   
   title = "Quality Control of R4V Monitoring Data - ActivityInfo 5W 2025",

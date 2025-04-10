@@ -4,7 +4,9 @@ library(bslib)
 library(gridlayout)
 library(DT)
 library(waiter)
-library(readxl)  # For reading Excel files
+library(readxl)
+library(writexl)
+library(purrr)
 
 server <- function(input, output, session) {
   metrics_db <- reactiveValues(
