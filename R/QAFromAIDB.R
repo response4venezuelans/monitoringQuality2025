@@ -53,7 +53,15 @@ qa_check <- function(data) {
     mutate(QA_valid_cva = is_valid_cva(CVA, Value..in.USD., Delivery.mechanism)) |>
     mutate(QA_admin = check_admin_validity(Country.Country, Country.Admin1, countryListDF)) |>
     mutate(QA_indicator = check_indicator_validity(Indicator.Sector, Indicator.Indicator, indicatorDF)) %>%
-    mutate(QA_sum = rowSums(select(., starts_with("QA_"))))
+    # calculate only activities with error, this correspond to flag if the activity
+    # has one or more errors it will count as 1 
+    mutate(
+      QA_sum = apply(
+        select(., starts_with("QA_")),
+        1,
+        \(x) if (all(is.na(x))) 0 else max(x, na.rm = TRUE)
+      )
+    )
   
   return(data)
 }

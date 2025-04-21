@@ -8,7 +8,7 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
                                          "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
                                          "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8)",
+                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
                                          #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
                                          "Implementation Set up" = "ckjtet4kx69smeog",
                                          #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
@@ -48,7 +48,7 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
                                          "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
                                          "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8)",
+                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
                                          #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
                                          "Implementation Set up" = "ckjtet4kx69smeog",
                                          #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
@@ -88,7 +88,7 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
                                          "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
                                          "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
                                          "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8)",
+                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
                                          #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
                                          "Implementation Set up" = "ckjtet4kx69smeog",
                                          #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
@@ -410,11 +410,18 @@ is_valid_agd_sector_specific <- function (sector_column, sector_name, indicator_
   )
 }
 
-## Functions for metrics in boxes
+#'Get total Activities in the activities dataframe
+#'@param dataframe An activity Info dataframe with 5w activities 
+#'@return returns a number of activites in a dataframe
+
 get_total_activities <- function(dataframe){
   return(nrow(dataframe))
 }
 
+
+#' Get the total of activities to review
+#' @param dataframe An activity Info dataframe with 5w activities 
+#' @param column_name a column TODO
 get_total_activities_to_review <- function(dataframe, column_name) {
   dataframe %>%
     summarize(total = sum(.data[[column_name]], na.rm = TRUE)) %>%
@@ -461,7 +468,7 @@ check_dataframe_structure <- function(dataframe, template_file_path, sheet = 1) 
   }
 }
 
-
+# Functions to be used for excel QA 
 rename_columns <- function(dataframe) {
   # Replace spaces, "(" and ")" with "."
   colnames(dataframe) <- colnames(dataframe) |>
