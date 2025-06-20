@@ -203,7 +203,7 @@ is_valid_total_beneficiaries_of_month <- function(indicator_type, total_monthly_
 #' It returns `1` for invalid values and `0` for valid cases.
 #'
 #' **Validation Rules:**
-#' - If `indicator_type` is `"Direct Assistance"`, `new_beneficiaries_of_month` **must be greater than 0**. (Error if `≤ 0` or `NA`).
+#' - If `indicator_type` is `"Direct Assistance"`, `new_beneficiaries_of_month` **must be greater than 0**. (Error if `< 0` or `NA`).
 #' - If `indicator_type` is `"Capacity Building"`, `new_beneficiaries_of_month` **must be ≥ 0**. (Error if `NA` or `< 0`).
 #' - For **all other types**, `new_beneficiaries_of_month` **must be `NA`**. (Error if it has any numeric value).
 #'
@@ -214,7 +214,6 @@ is_valid_total_beneficiaries_of_month <- function(indicator_type, total_monthly_
 #'
 #' @examples
 #' is_valid_new_beneficiaries_of_month("Direct Assistance", 5)  # Returns 0 (valid)
-#' is_valid_new_beneficiaries_of_month("Direct Assistance", 0)  # Returns 1 (error)
 #' is_valid_new_beneficiaries_of_month("Capacity Building", -1) # Returns 1 (error)
 #' is_valid_new_beneficiaries_of_month("Other", 5)              # Returns 1 (error)
 #' is_valid_new_beneficiaries_of_month("Other", NA)             # Returns 0 (valid)
@@ -227,7 +226,7 @@ is_valid_new_beneficiaries_of_month <- function(indicator_type, new_beneficiarie
   }
   
   # Logical conditions for each rule
-  direct_assistance_error <- (indicator_type == "Direct Assistance") & (is.na(new_beneficiaries_of_month) | new_beneficiaries_of_month <= 0)
+  direct_assistance_error <- (indicator_type == "Direct Assistance") & (is.na(new_beneficiaries_of_month) | new_beneficiaries_of_month < 0)
   capacity_building_error <- (indicator_type == "Capacity Building") & (is.na(new_beneficiaries_of_month) | new_beneficiaries_of_month < 0)
   other_types_error <- !(indicator_type %in% c("Direct Assistance", "Capacity Building")) & (!is.na(new_beneficiaries_of_month))
   
