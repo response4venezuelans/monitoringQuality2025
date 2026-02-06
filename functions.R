@@ -4,123 +4,125 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
   if (typeOfRequest == "country" & filterRequest != "All") {
     value <- filterRequest
     Monitoring5WqueryTable <- queryTable("cua8ntdm07falxuu7r",
-                                         "Record ID" = "cua8ntdm07falxuu7r._id",
-                                         "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
-                                         "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
-                                         "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
-                                         #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
-                                         "Implementation Set up" = "ckjtet4kx69smeog",
-                                         #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
-                                         "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
-                                         "Month" = "clqgqrqkyueahma8",
-                                         "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
-                                         "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
-                                         "Activity Name" = "c3p669wkx6a7oyo4",
-                                         "Activity Description" = "c8hxf50kx6a7vp65",
-                                         "RMRP Activity" = "cuf3og8kx6amylmf",
-                                         "CVA" = "cbvqg4jkx6b1kii7",
-                                         "Value (in USD)" = "clwkfmckx6b2msu9",
-                                         "Delivery mechanism" = "cg3rikqkx6b3z1kf",
-                                         "Quantity of output" = "cm6no26kx6b8fqoh",
-                                         "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
-                                         "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
-                                         "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
-                                         "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
-                                         "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
-                                         "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
-                                         "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
-                                         "Women under 18" = "cwrxeaekx6l63na4s",
-                                         "Men under 18" = "ccx7xhekx6l6jnk4t",
-                                         "Women above 18" = "c3l36n2kx6l70kp4u",
-                                         "Men above 18" = "ctd27ackx6l7g814v",
-                                         "Other under 18" = "ckjcuiokx6l9a504w",
-                                         "Other above 18" = "cq4hs3skx6lggpj4x",
-                                         "Platform" = "cuhb8obl0wjzz9r3",
-                                         "Indicator Indicator Type" = "cuskmf7lctcszoga",
-                                         "Country countryISO" = "c1u8kphm4vqtemz2",
-                                         "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
-                                         filter = sprintf("LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4) == '%s'", value))
+      "Record ID" = "cua8ntdm07falxuu7r._id",
+      "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
+      "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
+      "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
+      "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
+      # "Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
+      "Implementation Set up" = "ckjtet4kx69smeog",
+      # "Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
+      "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
+      "Month" = "clqgqrqkyueahma8",
+      "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
+      "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
+      "Activity Name" = "c3p669wkx6a7oyo4",
+      "Activity Description" = "c8hxf50kx6a7vp65",
+      "RMRP Activity" = "cuf3og8kx6amylmf",
+      "CVA" = "cbvqg4jkx6b1kii7",
+      "Value (in USD)" = "clwkfmckx6b2msu9",
+      "Delivery mechanism" = "cg3rikqkx6b3z1kf",
+      "Quantity of output" = "cm6no26kx6b8fqoh",
+      "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
+      "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
+      "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
+      "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
+      "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
+      "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
+      "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
+      "Women under 18" = "cwrxeaekx6l63na4s",
+      "Men under 18" = "ccx7xhekx6l6jnk4t",
+      "Women above 18" = "c3l36n2kx6l70kp4u",
+      "Men above 18" = "ctd27ackx6l7g814v",
+      "Other under 18" = "ckjcuiokx6l9a504w",
+      "Other above 18" = "cq4hs3skx6lggpj4x",
+      "Platform" = "cuhb8obl0wjzz9r3",
+      "Indicator Indicator Type" = "cuskmf7lctcszoga",
+      "Country countryISO" = "c1u8kphm4vqtemz2",
+      "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
+      filter = sprintf("LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4) == '%s'", value)
+    )
   } else if (typeOfRequest == "partner" & filterRequest != "All") {
     value <- filterRequest
     Monitoring5WqueryTable <- queryTable("cua8ntdm07falxuu7r",
-                                         "Record ID" = "cua8ntdm07falxuu7r._id",
-                                         "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
-                                         "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
-                                         "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
-                                         #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
-                                         "Implementation Set up" = "ckjtet4kx69smeog",
-                                         #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
-                                         "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
-                                         "Month" = "clqgqrqkyueahma8",
-                                         "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
-                                         "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
-                                         "Activity Name" = "c3p669wkx6a7oyo4",
-                                         "Activity Description" = "c8hxf50kx6a7vp65",
-                                         "RMRP Activity" = "cuf3og8kx6amylmf",
-                                         "CVA" = "cbvqg4jkx6b1kii7",
-                                         "Value (in USD)" = "clwkfmckx6b2msu9",
-                                         "Delivery mechanism" = "cg3rikqkx6b3z1kf",
-                                         "Quantity of output" = "cm6no26kx6b8fqoh",
-                                         "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
-                                         "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
-                                         "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
-                                         "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
-                                         "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
-                                         "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
-                                         "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
-                                         "Women under 18" = "cwrxeaekx6l63na4s",
-                                         "Men under 18" = "ccx7xhekx6l6jnk4t",
-                                         "Women above 18" = "c3l36n2kx6l70kp4u",
-                                         "Men above 18" = "ctd27ackx6l7g814v",
-                                         "Other under 18" = "ckjcuiokx6l9a504w",
-                                         "Other above 18" = "cq4hs3skx6lggpj4x",
-                                         "Platform" = "cuhb8obl0wjzz9r3",
-                                         "Indicator Indicator Type" = "cuskmf7lctcszoga",
-                                         "Country countryISO" = "c1u8kphm4vqtemz2",
-                                         "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
-                                         filter = sprintf("LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8) == '%s'", value))
-  } else if (typeOfRequest == "partner" & filterRequest == "All" || 
-             typeOfRequest == "country" & filterRequest == "All") {
+      "Record ID" = "cua8ntdm07falxuu7r._id",
+      "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
+      "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
+      "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
+      "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
+      # "Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
+      "Implementation Set up" = "ckjtet4kx69smeog",
+      # "Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
+      "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
+      "Month" = "clqgqrqkyueahma8",
+      "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
+      "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
+      "Activity Name" = "c3p669wkx6a7oyo4",
+      "Activity Description" = "c8hxf50kx6a7vp65",
+      "RMRP Activity" = "cuf3og8kx6amylmf",
+      "CVA" = "cbvqg4jkx6b1kii7",
+      "Value (in USD)" = "clwkfmckx6b2msu9",
+      "Delivery mechanism" = "cg3rikqkx6b3z1kf",
+      "Quantity of output" = "cm6no26kx6b8fqoh",
+      "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
+      "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
+      "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
+      "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
+      "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
+      "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
+      "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
+      "Women under 18" = "cwrxeaekx6l63na4s",
+      "Men under 18" = "ccx7xhekx6l6jnk4t",
+      "Women above 18" = "c3l36n2kx6l70kp4u",
+      "Men above 18" = "ctd27ackx6l7g814v",
+      "Other under 18" = "ckjcuiokx6l9a504w",
+      "Other above 18" = "cq4hs3skx6lggpj4x",
+      "Platform" = "cuhb8obl0wjzz9r3",
+      "Indicator Indicator Type" = "cuskmf7lctcszoga",
+      "Country countryISO" = "c1u8kphm4vqtemz2",
+      "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6",
+      filter = sprintf("LOOKUPKEY(c8qpb9tm8946o023, cggtvzem8dksakw8) == '%s'", value)
+    )
+  } else if (typeOfRequest == "partner" & filterRequest == "All" ||
+    typeOfRequest == "country" & filterRequest == "All") {
     Monitoring5WqueryTable <- queryTable("cua8ntdm07falxuu7r",
-                                         "Record ID" = "cua8ntdm07falxuu7r._id",
-                                         "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
-                                         "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
-                                         "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
-                                         "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
-                                         #"Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
-                                         "Implementation Set up" = "ckjtet4kx69smeog",
-                                         #"Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
-                                         "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
-                                         "Month" = "clqgqrqkyueahma8",
-                                         "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
-                                         "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
-                                         "Activity Name" = "c3p669wkx6a7oyo4",
-                                         "Activity Description" = "c8hxf50kx6a7vp65",
-                                         "RMRP Activity" = "cuf3og8kx6amylmf",
-                                         "CVA" = "cbvqg4jkx6b1kii7",
-                                         "Value (in USD)" = "clwkfmckx6b2msu9",
-                                         "Delivery mechanism" = "cg3rikqkx6b3z1kf",
-                                         "Quantity of output" = "cm6no26kx6b8fqoh",
-                                         "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
-                                         "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
-                                         "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
-                                         "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
-                                         "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
-                                         "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
-                                         "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
-                                         "Women under 18" = "cwrxeaekx6l63na4s",
-                                         "Men under 18" = "ccx7xhekx6l6jnk4t",
-                                         "Women above 18" = "c3l36n2kx6l70kp4u",
-                                         "Men above 18" = "ctd27ackx6l7g814v",
-                                         "Other under 18" = "ckjcuiokx6l9a504w",
-                                         "Other above 18" = "cq4hs3skx6lggpj4x",
-                                         "Platform" = "cuhb8obl0wjzz9r3",
-                                         "Indicator Indicator Type" = "cuskmf7lctcszoga",
-                                         "Country countryISO" = "c1u8kphm4vqtemz2",
-                                         "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6")
-    
+      "Record ID" = "cua8ntdm07falxuu7r._id",
+      "Country Country" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, cbdjswrm8dkqm6e4)",
+      "Country Admin1" = "LOOKUPKEY(c3qnjdvm4vqhg8s2, ciin9drm8dkqms05)",
+      "Admin2" = "LOOKUPKEY(cdm4lv6m4vqi3by7, [4enfgfm4vqi7g49])",
+      "Appealing organisation Name" = "LOOKUPKEY(c8qpb9tm8946o023, cmo7n8ym91w5di39cw)",
+      # "Appealing organisation AOIDORG" = "LOOKUPKEY(c5648gjkx69ra2v9, rzbjp5m6fkic3m3)",
+      "Implementation Set up" = "ckjtet4kx69smeog",
+      # "Implementing partner AOIDORG" = "LOOKUPKEY(cdocy6flctaah8c4, 1)",
+      "Implementing partner Name" = "LOOKUPKEY(cmjno06m8943iuj2, c3tco7m8dksobwa)",
+      "Month" = "clqgqrqkyueahma8",
+      "Indicator Sector" = "LOOKUPKEY(cco8s7klctg5i192q, w5wdfam658oem73)",
+      "Indicator Indicator" = "LOOKUPKEY(cco8s7klctg5i192q, fut7ttm658oem84)",
+      "Activity Name" = "c3p669wkx6a7oyo4",
+      "Activity Description" = "c8hxf50kx6a7vp65",
+      "RMRP Activity" = "cuf3og8kx6amylmf",
+      "CVA" = "cbvqg4jkx6b1kii7",
+      "Value (in USD)" = "clwkfmckx6b2msu9",
+      "Delivery mechanism" = "cg3rikqkx6b3z1kf",
+      "Quantity of output" = "cm6no26kx6b8fqoh",
+      "Total monthly beneficiaries" = "cto1biukx6kwvnj4k",
+      "New beneficiaries of the month" = "c43j49ikx6kxyyc4l",
+      "Refugees and Migrants IN DESTINATION" = "cz3yof2kx6l024p4m",
+      "Refugees and Migrants IN TRANSIT" = "c8kl5o2kx6l0jip4n",
+      "Host Communities Beneficiaries" = "c5z8bvakx6l10d84o",
+      "Refugees and Migrants PENDULARS" = "c72dmskkx6l1hl04p",
+      "Colombian Returnees" = "cmoqhuckx6l4q9z4q",
+      "Women under 18" = "cwrxeaekx6l63na4s",
+      "Men under 18" = "ccx7xhekx6l6jnk4t",
+      "Women above 18" = "c3l36n2kx6l70kp4u",
+      "Men above 18" = "ctd27ackx6l7g814v",
+      "Other under 18" = "ckjcuiokx6l9a504w",
+      "Other above 18" = "cq4hs3skx6lggpj4x",
+      "Platform" = "cuhb8obl0wjzz9r3",
+      "Indicator Indicator Type" = "cuskmf7lctcszoga",
+      "Country countryISO" = "c1u8kphm4vqtemz2",
+      "Country Admin1ISOCode" = "cl3sspjkxeqq8yq6"
+    )
   }
   return(Monitoring5WqueryTable)
 }
@@ -128,15 +130,15 @@ getDataFromAI <- function(typeOfRequest, filterRequest) {
 
 #' Check if the output data column is valid for a given indicator type
 #'
-#' This function checks whether the `outputDataColumn` is `NA` when the 
-#' `indicatorType` is "Direct Assistance". If the condition is met, it 
+#' This function checks whether the `outputDataColumn` is `NA` when the
+#' `indicatorType` is "Direct Assistance". If the condition is met, it
 #' returns `TRUE`, otherwise `FALSE`.
 #'
 #' @param indicator_type A character string specifying the indicator type.
 #' @param output_data_column A value that can be `NA` or any other data type.
 #'
 #' @return An integer vector (`1` for errors, `0` for valid cases).
-#' 
+#'
 #' @examples
 #' is_valid_output("Direct Assistance", NA) # Returns 1
 #' is_valid_output("Other", 5) # Returns 0
@@ -146,7 +148,7 @@ is_valid_output <- function(indicator_type, output_data_column) {
   if (!is.character(indicator_type)) {
     stop("indicator_type must be a character string.")
   }
-  
+
   # Validate the condition
   result <- ifelse(
     indicator_type == "Direct Assistance" & is.na(output_data_column),
@@ -157,7 +159,7 @@ is_valid_output <- function(indicator_type, output_data_column) {
       0L
     )
   )
-  
+
   return(result)
 }
 
@@ -172,34 +174,32 @@ is_valid_output <- function(indicator_type, output_data_column) {
 #' @param total_monthly_beneficiaries_data_column A numeric vector or NA values.
 #'
 #' @return An integer vector (`1` for errors, `0` for valid cases).
-#' 
+#'
 #' @examples
 #' is_valid_total_beneficiaries_of_month(c("Infrastructure", "Health"), c(NA, 5)) # Returns c(0, 0)
 #' is_valid_total_beneficiaries_of_month(c("Health", "Other"), c(NA, 0)) # Returns c(1, 1)
 #'
 is_valid_total_beneficiaries_of_month <- function(indicator_type, total_monthly_beneficiaries_data_column) {
-  
   # Ensure the input is a character vector
   if (!is.character(indicator_type)) {
     stop("indicator_type must be a character vector.")
   }
-  
+
   # Define valid types that should NOT trigger an error
   optional_types <- c("Infrastructure", "Mechanism/Advocacy", "Other")
-  
+
   # Logical condition: Should return 1 if NOT in valid types and has NA or zero
-  error_condition <- (!indicator_type %in% optional_types) & 
-    (is.na(total_monthly_beneficiaries_data_column) | 
-       total_monthly_beneficiaries_data_column == 0)
+  error_condition <- (!indicator_type %in% optional_types) &
+    (is.na(total_monthly_beneficiaries_data_column) |
+      total_monthly_beneficiaries_data_column == 0)
   # Explicitly return numeric values (1 for error, 0 for valid cases)
   return(ifelse(error_condition, 1L, 0L))
 }
 
 
-
 #' Validate new beneficiaries count based on indicator type
 #'
-#' This function checks the validity of `new_beneficiaries_of_month` based on `indicator_type`. 
+#' This function checks the validity of `new_beneficiaries_of_month` based on `indicator_type`.
 #' It returns `1` for invalid values and `0` for valid cases.
 #'
 #' **Validation Rules:**
@@ -213,26 +213,25 @@ is_valid_total_beneficiaries_of_month <- function(indicator_type, total_monthly_
 #' @return An integer vector (`1` for invalid values, `0` for valid values).
 #'
 #' @examples
-#' is_valid_new_beneficiaries_of_month("Direct Assistance", 5)  # Returns 0 (valid)
+#' is_valid_new_beneficiaries_of_month("Direct Assistance", 5) # Returns 0 (valid)
 #' is_valid_new_beneficiaries_of_month("Capacity Building", -1) # Returns 1 (error)
-#' is_valid_new_beneficiaries_of_month("Other", 5)              # Returns 1 (error)
-#' is_valid_new_beneficiaries_of_month("Other", NA)             # Returns 0 (valid)
+#' is_valid_new_beneficiaries_of_month("Other", 5) # Returns 1 (error)
+#' is_valid_new_beneficiaries_of_month("Other", NA) # Returns 0 (valid)
 #'
 is_valid_new_beneficiaries_of_month <- function(indicator_type, new_beneficiaries_of_month) {
-  
   # Ensure indicator_type is a character vector
   if (!is.character(indicator_type)) {
     stop("indicator_type must be a character vector.")
   }
-  
+
   # Logical conditions for each rule
   direct_assistance_error <- (indicator_type == "Direct Assistance") & (is.na(new_beneficiaries_of_month) | new_beneficiaries_of_month < 0)
   capacity_building_error <- (indicator_type == "Capacity Building") & (is.na(new_beneficiaries_of_month) | new_beneficiaries_of_month < 0)
   other_types_error <- !(indicator_type %in% c("Direct Assistance", "Capacity Building")) & (!is.na(new_beneficiaries_of_month))
-  
+
   # Combine conditions and return 1 for errors, 0 for valid cases
   error_condition <- direct_assistance_error | capacity_building_error | other_types_error
-  
+
   return(ifelse(error_condition, 1L, 0L))
 }
 
@@ -303,20 +302,21 @@ is_valid_age_gender_disaggregation <- function(indicator_type, population_column
 #'
 #' @export
 is_valid_cva <- function(cva_column, cva_value, cva_type) {
-  
   # Ensure inputs are vectors of the same length
   if (length(cva_column) != length(cva_value) || length(cva_column) != length(cva_type)) {
     stop("cva_column, cva_value, and cva_type must be vectors of the same length.")
   }
-  
+
   # Define valid CVA types
-  valid_cva_types <- c("Beneficiary Bank Account", "Mobile Money", "Prepaid Card", 
-                       "Cash Collection Over the Counter (OTC)", "Direct Cash (Cash in Hand)", 
-                       "Cardless ATM Withdrawal", "Voucher", "Other")
-  
+  valid_cva_types <- c(
+    "Beneficiary Bank Account", "Mobile Money", "Prepaid Card",
+    "Cash Collection Over the Counter (OTC)", "Direct Cash (Cash in Hand)",
+    "Cardless ATM Withdrawal", "Voucher", "Other"
+  )
+
   # Check conditions
   cva_check <- cva_column == "Yes" & (cva_value <= 0 | !cva_type %in% valid_cva_types)
-  
+
   # Return 1 for errors, 0 for valid cases, NA for other cases
   return(ifelse(cva_column == "Yes", ifelse(cva_check, 1L, 0L), 0L))
 }
@@ -341,16 +341,16 @@ check_admin_validity <- function(reported_admin0, reported_admin1, valid_admin_t
   # Join with valid admin table
   joined_df <- input_df |>
     dplyr::left_join(valid_admin_table, by = c(
-      "Country_Country" = "Country", 
+      "Country_Country" = "Country",
       "Country_Admin1" = "Admin1"
     ))
   # Return logical vector if match found
   validity_check <- ifelse(
     is.na(joined_df$countryISO) | is.na(joined_df$Admin1ISOCode),
-    1,  # No match found
-    0   # Match found
+    1, # No match found
+    0 # Match found
   )
-  
+
   return(validity_check)
 }
 
@@ -373,16 +373,16 @@ check_indicator_validity <- function(reported_sector, reported_indicator, valid_
   # Join with valid admin table
   joined_df <- input_df |>
     dplyr::left_join(valid_indicator_table, by = c(
-      "Sector" = "Sector", 
+      "Sector" = "Sector",
       "Indicator" = "Indicator"
     ))
   # Return logical vector if match found
   validity_check <- ifelse(
     is.na(joined_df$CODE),
-    1,  # No match found
-    0   # Match found
+    1, # No match found
+    0 # Match found
   )
-  
+
   return(validity_check)
 }
 
@@ -391,7 +391,7 @@ check_indicator_validity <- function(reported_sector, reported_indicator, valid_
 
 #' Check Validity consistency of report regarding AGD within a Sector
 #'
-#' This function checks if the AGD values in 5W for a sector, belong to 
+#' This function checks if the AGD values in 5W for a sector, belong to
 #' specific AGD groups.
 #'
 #' @param sector_column A character column of reported sector.
@@ -401,25 +401,25 @@ check_indicator_validity <- function(reported_sector, reported_indicator, valid_
 #' @return Returns 0 if direct assistance in sector is in accordance with AGD
 #'  and 1 otherwise .
 
-is_valid_agd_sector_specific <- function (sector_column, sector_name, indicator_type_column, population_columns){
+is_valid_agd_sector_specific <- function(sector_column, sector_name, indicator_type_column, population_columns) {
   case_when(
-    indicator_type_column == "Direct Assistance" & sector_column == sector_name &
-      sum(population_columns, na.rm = TRUE) >0 ~ 1L,
+    indicator_type_column == "Direct Assistance" & grepl(sector_name, sector_column, fixed = TRUE) &
+      sum(population_columns, na.rm = TRUE) == 0 ~ 1L,
     TRUE ~ 0L
   )
 }
 
-#'Get total Activities in the activities dataframe
-#'@param dataframe An activity Info dataframe with 5w activities 
-#'@return returns a number of activites in a dataframe
+#' Get total Activities in the activities dataframe
+#' @param dataframe An activity Info dataframe with 5w activities
+#' @return returns a number of activites in a dataframe
 
-get_total_activities <- function(dataframe){
+get_total_activities <- function(dataframe) {
   return(nrow(dataframe))
 }
 
 
 #' Get the total of activities to review
-#' @param dataframe An activity Info dataframe with 5w activities 
+#' @param dataframe An activity Info dataframe with 5w activities
 #' @param column_name a column TODO
 get_total_activities_to_review <- function(dataframe, column_name) {
   dataframe %>%
@@ -431,8 +431,8 @@ get_percentage_activities <- function(total_errors, total_activities) {
   if (total_activities == 0) {
     return(0)
   }
-  
-  round((total_errors / total_activities) * 100,2)
+
+  round((total_errors / total_activities) * 100, 2)
 }
 
 ## functions for processing external excel file
@@ -467,14 +467,14 @@ check_dataframe_structure <- function(dataframe, template_file_path, sheet = 1) 
   }
 }
 
-# Functions to be used for excel QA 
+# Functions to be used for excel QA
 rename_columns <- function(dataframe) {
   # Replace spaces, "(" and ")" with "."
   colnames(dataframe) <- colnames(dataframe) |>
     gsub(" ", ".", x = _) |>
     gsub("\\(", ".", x = _) |>
     gsub("\\)", ".", x = _)
-  
+
   return(dataframe)
 }
 
@@ -489,49 +489,40 @@ add_platform_column <- function(df) {
       Country.Country %in% c("Aruba", "Curacao", "Guyana", "Dominican Republic", "Trinidad and Tobago") ~ "Caribbean",
       Country.Country %in% c("Costa Rica", "Mexico", "Panama") ~ "Central America and Mexico",
       Country.Country %in% c("Argentina", "Paraguay", "Uruguay", "Bolivia") ~ "Southern Cone",
-      
       TRUE ~ NA_character_
     ))
   return(df)
 }
 
-addIndicatorType<-function(df, indicatordf){
-  
+addIndicatorType <- function(df, indicatordf) {
   indicatordf <- indicatordf %>%
     select(Sector, Indicator, Indicator.Type)
-  
-  df<-df%>%
-    left_join(
-      indicatordf, by = c(
-        "Indicator.Sector" = "Sector", 
-        "Indicator.Indicator" = "Indicator"
-      )
-    )%>%
-    rename(Indicator.Indicator.Type = Indicator.Type)
-           
-  return(df)
-    
-}
 
-addCountryISOCodes<-function(df, countryDF){
   df <- df %>%
     left_join(
-      countryDF, by = c(
+      indicatordf,
+      by = c(
+        "Indicator.Sector" = "Sector",
+        "Indicator.Indicator" = "Indicator"
+      )
+    ) %>%
+    rename(Indicator.Indicator.Type = Indicator.Type)
+
+  return(df)
+}
+
+addCountryISOCodes <- function(df, countryDF) {
+  df <- df %>%
+    left_join(
+      countryDF,
+      by = c(
         "Country.Country" = "Country",
         "Country.Admin1" = "Admin1"
       )
-    )%>%
+    ) %>%
     rename(
-      "Country.countryISO"= "countryISO",
+      "Country.countryISO" = "countryISO",
       "Country.Admin1ISOCode" = "Admin1ISOCode"
     )
   return(df)
 }
-
-
-
-
-
-
-
-
