@@ -1,74 +1,75 @@
 library(shiny)
 library(activityinfo)
+library(httr2)
+library(dplyr)
 library(bslib)
 library(gridlayout)
 library(DT)
-source("functions.R")
 
-#Define Custom Theme
-# Define custom theme using the provided color palette
-R4Vtheme <- bs_theme(
-  bg = "#f0f2f5",  # Light gray background
-  fg = "#132A3E",  # Dark blue foreground
-  primary = "#00AAAD",  # Teal primary color
-  secondary = "#902857",  # Dark pink secondary color
-  success = "#72BF44",  # Green success color
-  info = "#129ABF",  # Light blue info color
-  warning = "#FEBE10",  # Yellow warning color
-  danger = "#e83f54",  # Red danger color
+activityInfoToken(Sys.getenv("ACTIVITYINFOTOKEN"), prompt = FALSE)
+
+r4v_theme <- bs_theme(
+  bg = "#f0f2f5",
+  fg = "#132A3E",
+  primary = "#00AAAD",
+  secondary = "#902857",
+  success = "#72BF44",
+  info = "#129ABF",
+  warning = "#FEBE10",
+  danger = "#e83f54",
   base_font = font_google("Inter"),
   code_font = font_google("JetBrains Mono")
 )
 
-activityInfoToken(Sys.getenv("ACTIVITYINFOTOKEN"), prompt = FALSE)
-# Get from Activity Info data Lists
-# Monitoring framework
-# Admin list
-# Organization list
-# Country list
+# Reference data from ActivityInfo data lists: country list, partners, indicators
 
-countryListDF <- queryTable("cnkrge1m07falxuu7o",
+country_list_df <- queryTable("cnkrge1m07falxuu7o",
                  "Country" = "c8u26b8kxeqpy0k4",
                  "Admin1" = "c3ns3zikxeqq4h95",
                  "Admin1ISOCode" = "cl3sspjkxeqq8yq6",
                  "countryISO" = "c1u8kphm4vqtemz2")
 
-countryList <-  unique(countryListDF$Country)
-# Include All to get all data
-countryList <- c(countryList, "All")
+country_list <- country_list_df |>
+  distinct(Country) |>
+  pull(Country) |>
+  c("All")
 
+partners_df <- tryCatch(
+  fetch_ai_form("ccopwnzmjrensxpf96"),
+  error = function(e) {
+    message("ERROR fetching partners form: ", conditionMessage(e))
+    tibble(Name = character(0))
+  }
+)
+partner_list <- partners_df |> distinct(Name) |> pull(Name) |> c("All")
 
+indicators_ref_2026 <- tryCatch(
+  fetch_ai_form("c17x28umnqepjii1ho"),
+  error = function(e) {
+    message("ERROR fetching 2026 indicator reference: ", conditionMessage(e))
+    tibble(`_id` = character(0), sector = character(0),
+           indicator_simplified = character(0), indictatortype = character(0))
+  }
+)
 
-df_partnersDF <- queryTable("cukzlnfm66k09v73",
-                          "IPID" = "cladozxm66k0duc4",
-                          "AOIDORG" = "c7any2um66k0duf5",
-                          "Name" = "crsqq8vm66k0dug6",
-                          "Nombre" = "cycv8tum66k0dug7",
-                          "Nome" = "cwq2vmdm66k0duh8",
-                          "Acronym/Short Name" = "c5jh080m66k0duh9",
-                          "Type" = "cjdhnb0m66k0duha",
-                          "Regional" = "c91cd1dm66k0dujm",
-                          "Platform" = "cnn13w6m66k0dukp",
-                          "Refugees and Migrants lead" = "cw7tb4hm66k0dulz",
-                          "Link EN" = "cl2tilvm66k0dul12",
-                          "Link ES" = "cakk6mm66k0dum13")
-partnerList<- unique(df_partnersDF$Name)
-partnerList <- c(partnerList, "All")
+indicators_2026_types <- indicators_ref_2026 |>
+  select(`_id`, indictatortype) |>
+  rename(indicator_ref = `_id`, indicator_type = indictatortype)
 
-indicatorDF <- queryTable("cwk3g8tm07falxuu7j",
-                 "CODE" = "cdhugiblctco28h3",
-                 "Sector" = "cagw22hlctcp2vu5",
-                 "Sector Objective" = "cyyqv3alctcperj6",
-                 "Indicator" = "c1oo0eclctcqtjp8",
-                 "Rationale" = "cpaq2z8m07feolz3",
-                 "Indicator Type" = "cuskmf7lctcszoga",
-                 "Definitions" = "cmfe24fm07ff9y24",
-                 "Sector SP" = "cviy6p0lctcud9xc",
-                 "Objetivo" = "c4ut4hjlctcunimd",
-                 "Indicador" = "c9ck1g2lctcuxg4e",
-                 "Descripcion" = "chilz3cm07fgc9g5",
-                 "Tipo de indicador" = "cw1sv7hlctd1pk5g",
-                 "Definiciones" = "cyznpw1m07fgv8l6")
+indicator_df <- tryCatch(
+  indicators_ref_2026 |>
+    rename(
+      CODE           = `_id`,
+      Sector         = sector,
+      Indicator      = indicator_simplified,
+      Indicator.Type = indictatortype
+    ),
+  error = function(e) {
+    message("ERROR building indicator_df from 2026 reference: ", conditionMessage(e))
+    tibble(CODE = character(0), Sector = character(0),
+           Indicator = character(0), Indicator.Type = character(0))
+  }
+)
 
 activities_icon <-
   HTML(
