@@ -8,10 +8,11 @@ library(readxl)
 library(writexl)
 library(purrr)
 ui <- page_navbar(
-  title = "Quality Control of R4V Monitoring Data - ActivityInfo 5W 2026",
+  
+  title = "Quality Control of R4V Monitoring Data - ActivityInfo 5W 2025",
   selected = "About",
-  navbar_options = navbar_options(collapsible = TRUE),
-  theme = r4v_theme,
+  collapsible = TRUE,
+  theme = R4Vtheme,
   header = tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
     tags$link(rel = "shortcut icon", href = "img/logo.ico"),
@@ -25,7 +26,7 @@ ui <- page_navbar(
     tags$div(
       style = "text-align: center;",
       tags$img(src = "img/r4vLogo.png", height = "100px"),
-      tags$h1("Quality Control of Monitoring Data ActivityInfo - 5W 2026"),
+      tags$h1("Quality Control of Monitoring Data ActivityInfo - 5W 2025"),
       tags$div(
         style = "text-align: justify;",
         tags$p(
